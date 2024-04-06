@@ -31,29 +31,25 @@ export const ValidationTest3 = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormInp((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-
-    if (name === "password") {
-      setFormInp((prevState) => ({
+    setFormInp((prevState) => {
+      const updatedState = {
         ...prevState,
-        confirmPassword: value,
-      }));
-    }
-
-    const errorMessage = Validation({ [name]: value });
-    setErrors((prevState) => ({
-      ...prevState,
-      [name]: errorMessage,
-    }));
+        [name]: value,
+      };
+      setErrors(Validation({ [name]: value }, updatedState)); // Передаем обновленное состояние формы
+      return updatedState;
+    });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const formErrors = Validation(formInp);
+    setErrors(formErrors);
+    if (Object.keys(formErrors).length === 0) {
+      alert('Отправлено')
+      // submit form
+    }
   };
-
   return (
     <form onSubmit={handleSubmit}>
       <h1>Registration Form</h1>
