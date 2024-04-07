@@ -36,7 +36,7 @@ export const ValidationTest3 = () => {
         ...prevState,
         [name]: value,
       };
-      setErrors(Validation({ [name]: value }, updatedState)); // Передаем обновленное состояние формы
+      setErrors(Validation({ [name]: value }, updatedState)); 
       return updatedState;
     });
   };
